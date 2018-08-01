@@ -1,7 +1,12 @@
 // src/redux/reducers/qApps.js
 const initialState = {
     qApps: [],
-    qApp: null
+    qApp: null,
+	qSheets: [],
+	qMasterMeasures:[],
+	qMasterDimensions: [],
+	qMasterVisualizations: [],
+	qVariables:[]
 }
 export default (state=initialState, action) => {
     switch (action.type) {
@@ -14,7 +19,32 @@ export default (state=initialState, action) => {
         return {
             ...state,
             qApp: action.qApp
-        }        
+        }
+		case 'GET_SHEETS':
+		return{
+            ...state,
+            qSheets: action.qSheets				
+		}
+		case 'GET_DIMENSIONS':
+		return{
+            ...state,
+            qMasterDimensions: action.qMasterDimensions				
+		}
+		case 'GET_MEASURES':
+		return{
+            ...state,
+            qMasterMeasures: action.qMasterMeasures				
+		}
+		case 'GET_MASTER_VISUALIZATIONS':
+		return{
+            ...state,
+            qMasterVisualizations: action.qMasterVisualizations				
+		}
+		case 'GET_VARIABLES':
+		return{
+            ...state,
+            qVariables: action.qVariables				
+		}
         default:
             return state
     }

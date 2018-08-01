@@ -1,8 +1,8 @@
 // src/index.js
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import './assets/medium.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './assets/codewander-qlik-master.css';
+//import 'bootstrap/dist/css/bootstrap.min.css';
 import { Provider } from 'react-redux';
 import { Switch, Route } from 'react-router-dom';
 import  {ConnectedRouter } from 'react-router-redux';

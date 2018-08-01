@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {getApps, openApp} from './../redux/actions/actions'
-import QOpenAppButton from './QOpenAppButton'
+
 const mapStateToProps = state => {
     return {
         qApps: state.qApps.qApps
@@ -63,84 +63,93 @@ class qEngine extends Component {
 				selectedAppDetails=	
 				<div className="col-sm-9">
 				<h2>Details</h2>
-						<div className="well">
+						<div class="well">
 							<h4>Description</h4>
 							<p>{qApp.qMeta.description}</p>
 						</div>
-						  <div className="row">
-							<div className="col-sm-4">
-							  <div className="well">
+						  <div class="row">
+							<div class="col-sm-4">
+							  <div class="well">
 								<h4>File Size</h4>
 								<p>{qApp.qFileSize}</p> 
 							  </div>
 							</div>
-							<div className="col-sm-4">
-							  <div className="well">
+							<div class="col-sm-4">
+							  <div class="well">
 								<h4>File Time</h4>
 								<p>{fTime}</p> 
 							  </div>
 							</div>
-							<div className="col-sm-4">
-							  <div className="well">
+							<div class="col-sm-4">
+							  <div class="well">
 								<h4>Last Reloaded</h4>
 								<p>{qApp.qLastReloadTime}</p> 
 							  </div>
 							</div>
 						 </div>
-						 <div className="row">
-							<div className="col-sm-9">
-							  <div className="well">
+						 <div class="row">
+							<div class="col-sm-9">
+							  <div class="well">
 								<h4>App Id</h4>
 								<p>{qApp.qDocId}</p> 
 							  </div>
 							</div>
-							<div className="col-sm-3">
-							  <div className="well">
+							<div class="col-sm-3">
+							  <div class="well">
 								<h4>Connected Users</h4>
 								<p>{qApp.qConnectedUsers}</p> 
 							  </div>
-							</div>
-							<div className="pul-right">
-							<QOpenAppButton _appid={qApp.qDocName}/>
 							</div>
 							
 						 </div>
 				</div>
 					
-				return 	<li className="list-group-item d-flex justify-content-between align-items-center active" onClick={(e) => self.selectApp(qApp)} >
-					{qApp.qDocName} 
-					</li>
+					
 					
 				}
-				
-				
-                return <li className="list-group-item d-flex justify-content-between align-items-center" onClick={(e) => self.selectApp(qApp)} >
-					{qApp.qDocName} 
-					</li>
-					
+                return <li className={qApp.isSelected==true?"list-group-item active":"list-group-item"}  id={qApp.qDocName} onClick={(e) => self.selectApp(qApp)}>
+					{qApp.qDocName}
+                </li>
 			}
             )
 	
 		return ( 
-			
-				 <div className="container-fluid " >
-					  <div className="row content " >
-						<div className="col-sm-3 ">
-						  <h2>Apps</h2>
-						  <ul className="list-group  vertical-scroll" >
-						  {qApps}
-						  </ul><br></br>
-						</div>
-						{selectedAppDetails}
-						</div>
-				  </div>
+			<div>
+            <nav className="navbar navbar-inverse visible-xs">
+			  <div className="container-fluid">
+				<div className="navbar-header">
+				  <button type="button" className="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+					<span className="icon-bar"></span>
+					<span className="icon-bar"></span>
+					<span className="icon-bar"></span>                        
+				  </button>
+				  <a className="navbar-brand" href="#">Apps</a>
+				</div>
+				<div className="collapse navbar-collapse" id="myNavbar">
+				  <ul className="nav navbar-nav">
+				  {qApps}
+				  </ul>
+				</div>
+			  </div>
+			</nav>
 
-			
+			<div className="container-fluid">
+			  <div className="row content">
+				<div className="col-sm-3 sidenav hidden-xs">
+				  <h2>Apps</h2>
+				  <ul className="nav nav-pills nav-stacked">
+				  {qApps}
+				  </ul><br></br>
+				</div>
+				{selectedAppDetails}
+				</div>
+			</div><br></br>
+			 
 			 
 			
 			
 			
-			
+			</div>
         );
 	}
 	else{
