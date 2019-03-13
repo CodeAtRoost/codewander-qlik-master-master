@@ -1,10 +1,12 @@
 /** server/controllers/app.ctrl.js*/
 var currApp=null;
 var qGlobal=null;
-var qSession=null
+var qSession=null;
 const enigma = require('enigma.js');
 const WebSocket = require('ws');
 const schema = require('enigma.js/schemas/12.67.2.json');
+//const server_url= 'wss://playground-sense.qlik.com:4747/app/'
+const server_url= 'ws://localhost:4848/app/'
 
 module.exports = {
 	
@@ -25,7 +27,7 @@ var qOptionsSheet={
 var app_id=decodeURIComponent(req.params.app_id);
 var config={
 schema,
-url: 'ws://localhost:4848/app/'+app_id,
+url: server_url+app_id,
 createSocket: url => new WebSocket(url)
 
 };
@@ -66,7 +68,7 @@ if (req.params.app_id!=null)
 	app_id=req.params.app_id
 	var config={
 	schema,
-	url: 'ws://localhost:4848/app/'+app_id,
+	url: server_url  +app_id,
 	createSocket: url => new WebSocket(url)
 
 	};
@@ -86,7 +88,7 @@ if (req.params.app_id!=null)
 }
 else{
 currApp.getObjects(qOptionsSheet).then(function(qProp){
-	console.log("Returing Data");
+	//console.log("Returing Data");
 	res.json({msg:qProp})
 	
 	}
@@ -105,7 +107,7 @@ if (req.params.app_id!=null)
 	app_id=req.params.app_id
 	var config={
 	schema,
-	url: 'ws://localhost:4848/app/'+app_id,
+	url: server_url+app_id,
 	createSocket: url => new WebSocket(url)
 
 	};
@@ -118,7 +120,7 @@ if (req.params.app_id!=null)
 	qGlobal.openDoc(app_id).then((app) => {
 	currApp=app;
 	currApp.createSessionObject(qParam).then(function(qObject){
-		console.log("created object");
+		//console.log("created object");
 		qObject.getLayout().then(function(qProp){
 			res.json({msg:qProp.qDimensionList.qItems})
 		}, 
@@ -132,7 +134,7 @@ if (req.params.app_id!=null)
 }
 else{
 currApp.createSessionObject(qParam).then(function(qObject){
-		console.log("created object");
+		//console.log("created object");
 		qObject.getLayout().then(function(qProp){
 			res.json({msg:qProp.qDimensionList.qItems})
 		}, 
@@ -156,7 +158,7 @@ if (req.params.app_id!=null)
 	app_id=req.params.app_id
 	var config={
 	schema,
-	url: 'ws://localhost:4848/app/'+app_id,
+	url: server_url+app_id,
 	createSocket: url => new WebSocket(url)
 
 	};
@@ -169,7 +171,7 @@ if (req.params.app_id!=null)
 	qGlobal.openDoc(app_id).then((app) => {
 	currApp=app;
 	currApp.createSessionObject(qParam).then(function(qObject){
-		console.log("created object");
+		//console.log("created object");
 		qObject.getLayout().then(function(qProp){
 			res.json({msg:qProp.qMeasureList.qItems})
 		}, 
@@ -183,7 +185,7 @@ if (req.params.app_id!=null)
 }
 else{
 currApp.createSessionObject(qParam).then(function(qObject){
-		console.log("created object");
+		//console.log("created object");
 		qObject.getLayout().then(function(qProp){
 			res.json({msg:qProp.qMeasureList.qItems})
 		}, 
@@ -207,7 +209,7 @@ if (req.params.app_id!=null)
 	app_id=req.params.app_id
 	var config={
 	schema,
-	url: 'ws://localhost:4848/app/'+app_id,
+	url: server_url+app_id,
 	createSocket: url => new WebSocket(url)
 	};
 
@@ -259,7 +261,7 @@ if (req.params.app_id!=null)
 	app_id=req.params.app_id
 	var config={
 	schema,
-	url: 'ws://localhost:4848/app/'+app_id,
+	url: server_url+app_id,
 	createSocket: url => new WebSocket(url)
 	};
 
@@ -300,5 +302,158 @@ currApp.createSessionObject(qParam).then(function(qObject){
 
  } 
 
+ ,
+ getObjectDetails: (req,res,next)=>{
+
+ var object_id=app_id=req.params.object_id
+if (req.params.app_id!=null)
+{
+	
+	app_id=req.params.app_id
+	var config={
+	schema,
+	url: server_url+app_id,
+	createSocket: url => new WebSocket(url)
+
+	};
+	
+	if (qSession!=null)qSession.close();
+	qSession=enigma.create(config);
+	qSession.open().then((global) => {
+	qGlobal=global;
+  
+	qGlobal.openDoc(app_id).then((app) => {
+	currApp=app;
+	currApp.getObject(object_id).then(function(qObject){
+		qObject.getLayout().then(function(qProp){
+			res.json({msg:qProp})
+		}, 
+		(e)=> {console.log(err);res.json(err)});		
+		
+	}
+	,(err)=>{ console.log(err);res.json(err)}) ;
+	})
+	},(err)=>{ console.log(err);res.json(err)})
+	
+}
+else{
+currApp.getObject(object_id).then(function(qObject){
+		//console.log("created object");
+		qObject.getLayout().then(function(qProp){
+			res.json({msg:qProp})
+		}, 
+		(e)=> {console.log(err);res.json(err)});		
+		
+	}
+	,(err)=>{ console.log(err);res.json(err)})
+
+
+
+}
+
+ }, 
+
  
+ 
+ getMeasureDetails: (req,res,next)=>{
+
+ var measure_id=app_id=req.params.measure_id
+if (req.params.app_id!=null)
+{
+	
+	app_id=req.params.app_id
+	var config={
+	schema,
+	url: server_url+app_id,
+	createSocket: url => new WebSocket(url)
+
+	};
+	
+	if (qSession!=null)qSession.close();
+	qSession=enigma.create(config);
+	qSession.open().then((global) => {
+	qGlobal=global;
+  
+	qGlobal.openDoc(app_id).then((app) => {
+	currApp=app;
+	currApp.getMeasure(measure_id).then(function(qObject){
+		qObject.getLayout().then(function(qProp){
+			res.json({msg:qProp})
+		}, 
+		(e)=> {console.log(err);res.json(err)});		
+		
+	}
+	,(err)=>{ console.log(err);res.json(err)}) ;
+	})
+	},(err)=>{ console.log(err);res.json(err)})
+	
+}
+else{
+currApp.getMeasure(measure_id).then(function(qObject){
+		//console.log("created object");
+		qObject.getLayout().then(function(qProp){
+			res.json({msg:qProp})
+		}, 
+		(e)=> {console.log(err);res.json(err)});		
+		
+	}
+	,(err)=>{ console.log(err);res.json(err)})
+
+
+
+}
+
  }
+,
+ 
+getDimensionDetails: (req,res,next)=>{
+
+ var dimension_id=app_id=req.params.dimension_id
+if (req.params.app_id!=null)
+{
+	
+	app_id=req.params.app_id
+	var config={
+	schema,
+	url: server_url+app_id,
+	createSocket: url => new WebSocket(url)
+
+	};
+	
+	if (qSession!=null)qSession.close();
+	qSession=enigma.create(config);
+	qSession.open().then((global) => {
+	qGlobal=global;
+  
+	qGlobal.openDoc(app_id).then((app) => {
+	currApp=app;
+	currApp.getDimension(dimension_id).then(function(qObject){
+		qObject.getLayout().then(function(qProp){
+			res.json({msg:qProp})
+		}, 
+		(e)=> {console.log(err);res.json(err)});		
+		
+	}
+	,(err)=>{ console.log(err);res.json(err)}) ;
+	})
+	},(err)=>{ console.log(err);res.json(err)})
+	
+}
+else{
+currApp.getDimension(dimension_id).then(function(qObject){
+		//console.log("created object");
+		qObject.getLayout().then(function(qProp){
+			res.json({msg:qProp})
+		}, 
+		(e)=> {console.log(err);res.json(err)});		
+		
+	}
+	,(err)=>{ console.log(err);res.json(err)})
+
+
+
+}
+
+ }
+ 
+	}

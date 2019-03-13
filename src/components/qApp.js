@@ -6,6 +6,9 @@ import QDimensions from './QDimensions'
 import QMeasures from './QMeasures'
 import QVariables from './QVariables'
 import QVisualizations from './QVisualizations'
+
+
+
 const mapStateToProps = state => {
     return {
         qlikApp: state.qApps.qApp,
@@ -13,8 +16,8 @@ const mapStateToProps = state => {
 		qMasterDimensions: state.qApps.qMasterDimensions,
 		qMasterMeasures: state.qApps.qMasterMeasures,
 		qMasterVisualizations: state.qApps.qMasterVisualizations,
-		qVariables: state.qApps.qVariables
-		
+		qVariables: state.qApps.qVariables,
+		qDisplayObject :state.qDisplayObject == null ? {qObjectId:null}:state.qDisplayObject
 			
     }
 }
@@ -28,36 +31,44 @@ class qApp extends Component {
 		this.getCurrentAppMeasures= this.getCurrentAppMeasures.bind(this);
 		this.getCurrentAppVariables= this.getCurrentAppVariables.bind(this);
 		this.getCurrentAppMasterVisualizations= this.getCurrentAppMasterVisualizations.bind(this);
+		this.updateDisplayObject= this.updateDisplayObject.bind(this);
     }
+	
+	updateDisplayObject(pDisplayObjectId){
+	//this.props.qDisplayObject.qObjectId =pDisplayObjectId;
+	let qDisplayObject= Object.assign({}, this.props.qDisplayObject)
+	qDisplayObject.qObjectId=pDisplayObjectId 
+	this.setState( {qDisplayObject})
+	}
 	
 	getCurrentAppSheets(){
 		this.props.getSheets();	
 		this.props.qlikApp.currentView="SHEETS";
-		this.setState({qApp:this.props.qlikApp});		
+		//this.setState({qApp:this.props.qlikApp});		
 	}
 	
 	getCurrentAppDimensions(){
 		this.props.getDimensions();	
 		this.props.qlikApp.currentView="DIMENSIONS";
-		this.setState({qApp:this.props.qlikApp});		
+		//this.setState({qApp:this.props.qlikApp});		
 	}
 	
 	getCurrentAppMeasures(){
 		this.props.getMeasures();	
 		this.props.qlikApp.currentView="MEASURES";
-		this.setState({qApp:this.props.qlikApp});		
+		//this.setState({qApp:this.props.qlikApp});		
 	}
 	
 	getCurrentAppVariables(){
 		this.props.getVariables();	
 		this.props.qlikApp.currentView="VARIABLES";
-		this.setState({qApp:this.props.qlikApp});		
+		//this.setState({qApp:this.props.qlikApp});		
 	}
 	
 	getCurrentAppMasterVisualizations(){
 		this.props.getMasterVisualizations();	
 		this.props.qlikApp.currentView="MASTER_VISUALIZATIONS";
-		this.setState({qApp:this.props.qlikApp});		
+		//this.setState({qApp:this.props.qlikApp});		
 	}
 	
 	selectSheet(qSheet_selected){
@@ -71,17 +82,19 @@ class qApp extends Component {
     componentWillMount() {
 		const {match:{params}}=this.props;
         this.props.openApp(params.appid)
-		//this.props.openApp('NSEE.qvf');
-		//this.getCurrentAppSheets()
     }
 	
-	
+	 
     
     render() {
 	if (this.props.qlikApp!=null){
 	var self=this;
 	var selectedAppDetails=[];
 	var QShowDetails=""
+	var QDisplayObject=""
+	if (this.state!=null)QDisplayObject=this.state.qDisplayObject==null? "":this.state.qDisplayObject.qObjectId
+	
+	
 	if (this.props.qlikApp.currentView=="SHEETS")
 	{
 		QShowDetails=<QSheets qSheets={this.props.qSheets} />
@@ -92,7 +105,7 @@ class qApp extends Component {
 	}
 	else if (this.props.qlikApp.currentView=="MEASURES")
 	{
-		QShowDetails=<QMeasures qMeasures={this.props.qMasterMeasures} />
+		QShowDetails=<QMeasures qMeasures={this.props.qMasterMeasures} updateDisplayObject={this.updateDisplayObject} />
 	}
 	else if (this.props.qlikApp.currentView=="VARIABLES")
 	{
@@ -140,8 +153,11 @@ class qApp extends Component {
 			  </div>
 		</nav>
 		<div className="row">
-		<div className="col-lg-4">
+		<div className="col-lg-12">
 		{QShowDetails}
+		</div>
+		<div className="col-lg-8">
+		<div> {QDisplayObject}</div>
 		</div>
 		</div>
 		

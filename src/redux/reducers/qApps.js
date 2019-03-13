@@ -6,7 +6,9 @@ const initialState = {
 	qMasterMeasures:[],
 	qMasterDimensions: [],
 	qMasterVisualizations: [],
-	qVariables:[]
+	qVariables:[],
+	qDisplayObject:{qObjectId: null},
+	qObjectDetails:[]
 }
 export default (state=initialState, action) => {
     switch (action.type) {
@@ -44,7 +46,7 @@ export default (state=initialState, action) => {
 		return{
             ...state,
             qVariables: action.qVariables				
-		}
+		}		
         default:
             return state
     }

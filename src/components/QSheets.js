@@ -1,8 +1,6 @@
 // src/components/qOpenAppButton.js
 import React, { Component } from 'react';
-//import { withRouter } from 'react-router-dom'
-//import { connect } from 'react-redux'
-//import { history } from './../redux/store';
+import QSheet from './QSheet'
 class QSheets extends Component {
     constructor(props) {
         super(props)
@@ -12,12 +10,7 @@ class QSheets extends Component {
     render() {
 		
 		const qSheets = this.props.qSheets.map(function(qSheet){
-			return <tr>
-					  <th scope="row" >{qSheet.qMeta.title}</th>
-					  <td>{qSheet.qMeta.description}</td>
-					  <td><button type="button" class="btn btn-outline-primary">Details</button></td>
-					</tr>
-			
+			return (<QSheet qSheet={qSheet} />);			
 			
 		})
 	
@@ -29,6 +22,7 @@ class QSheets extends Component {
 					<tr>
 					  <th scope="col">Title</th>
 					  <th scope="col">Description</th>
+					  <th scope="col">Details</th>
 					  <th scope="col">Action</th>
 					</tr>
 				  </thead>

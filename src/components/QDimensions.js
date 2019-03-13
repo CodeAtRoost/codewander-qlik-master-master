@@ -3,22 +3,16 @@ import React, { Component } from 'react';
 //import { withRouter } from 'react-router-dom'
 //import { connect } from 'react-redux'
 //import { history } from './../redux/store';
+import QDimension from './QDimension'
 class QDimensions extends Component {
     constructor(props) {
-        super(props)
-       
+        super(props)       
     }
    
     render() {
 		
 		const qDimensions = this.props.qDimensions.map(function(qDimension){
-			return <tr>
-					  <th scope="row" >{qDimension.qMeta.title}</th>
-					  <td>{qDimension.qMeta.description}</td>
-					  <td><button type="button" class="btn btn-outline-primary">Details</button></td>
-					</tr>
-			
-			
+			return (<QDimension qDimension={qDimension} />);			
 		})
 	
 		
@@ -29,6 +23,7 @@ class QDimensions extends Component {
 					<tr>
 					  <th scope="col">Title</th>
 					  <th scope="col">Description</th>
+					  <th scope="col">Details</th>
 					  <th scope="col">Action</th>
 					</tr>
 				  </thead>

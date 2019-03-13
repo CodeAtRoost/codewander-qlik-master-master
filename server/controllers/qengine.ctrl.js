@@ -9,6 +9,7 @@ var qixSession=null
 const qix_config = {
   schema,
   url: 'ws://localhost:4848/app/engineData',
+  //url: 'wss://playground-sense.qlik.com:4747/app/engineData',
   createSocket: url => new WebSocket(url)
   
 };
@@ -24,7 +25,7 @@ qixSession=enigma.create(qix_config);
 qixSession.open().then((global) => {
   qixGlobal=global;
   qixGlobal.getDocList().then(function(list){res.json({msg:list})});
- });
+ },(err)=>{ console.log(err);res.json(err)});
 		
 		
 }

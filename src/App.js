@@ -7,7 +7,7 @@ import qApp from './components/qApp.js'
 
 class App extends Component {
     render() {
-        const pathname = window.location.pathname
+        //const pathname = window.location.pathname
         return ( 
             <div>
 				<PageHeader/>

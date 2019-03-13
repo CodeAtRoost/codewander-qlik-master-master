@@ -79,6 +79,52 @@ module.exports = (router) => {
 	router
         .route('/app/:app_id/master_visualizations')
         .get(appcontroller.getMasterVisualizations)
+		
+		
+/**
+     * return details of the object 
+     */
+    
+	router
+        .route('/app/current/objectdetails/:object_id')
+        .get(appcontroller.getObjectDetails)
+	/**
+     * open an App and return details of an object
+     */
+    
+	router
+        .route('/app/:app_id/objectdetails/:object_id')
+        .get(appcontroller.getObjectDetails)		
+
+	/**
+     * return details of the master measure 
+     */
+    
+	router
+        .route('/app/current/measuredetails/:measure_id')
+        .get(appcontroller.getMeasureDetails)
+	/**
+     * open an App and return details of a master measure
+     */
+    
+	router
+        .route('/app/:app_id/measuredetails/:measure_id')
+        .get(appcontroller.getMeasureDetails)		
+
+	/**
+     * return details of the master dimension 
+     */
+    
+	router
+        .route('/app/current/dimensiondetails/:dimension_id')
+        .get(appcontroller.getDimensionDetails)
+	/**
+     * open an App and return details of a master dimension
+     */
+    
+	router
+        .route('/app/:app_id/dimensiondetails/:dimension_id')
+        .get(appcontroller.getDimensionDetails)		
 
 		
 }

@@ -1,7 +1,8 @@
 // src/redux/reducers/common.js
 const defaultState = {
 appName: '',
-modalMode: false
+modalMode: false,
+server_url: "http://localhost:5000/api/"
 };
 export default (state = defaultState, action) => {
 switch (action.type) {
