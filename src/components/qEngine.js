@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import {getApps, openApp} from './../redux/actions/actions'
 import QOpenAppButton from './QOpenAppButton'
+import UNewApp from './modal/UNewApp'
 const mapStateToProps = state => {
     return {
         qApps: state.qApps.qApps
@@ -11,8 +12,19 @@ const mapStateToProps = state => {
 class qEngine extends Component {
 	constructor(props) {
         super(props)
-        this.selectApp = this.selectApp.bind(this)
+		
+        //this.newAppModal= false
+		this.selectApp = this.selectApp.bind(this)
+		//this.createApp = this.createApp.bind(this)
     }
+	
+	
+	
+	getAppNameandDesc(){
+		this.setState({newAppModal:true});
+		
+		
+	}
 	
 	selectApp(qApp_selected){
 		//this.props.openApp(_id);	
@@ -33,6 +45,8 @@ class qEngine extends Component {
         
     componentWillMount() {
         this.props.getApps()
+		this.setState()
+		
 		//this.props.openApp('NSEE.qvf');
     }
 	
@@ -41,10 +55,13 @@ class qEngine extends Component {
     render() {
 	if (this.props.qApps.length>0){
 	var self=this;
+	var newAppModalForm = ""
+	
 	var selectedAppDetails=[];
-    const qApps = this.props.qApps.map(function(qApp){
-				//qApp.isSelected=false
-				
+	//alert (this.state.newAppModal)
+     
+	const qApps = this.props.qApps.map(function(qApp){
+				//qApp.isSelected=false				
 				if (qApp.isSelected){
 					
 				var time = qApp.qFileTime
@@ -59,7 +76,7 @@ class qEngine extends Component {
 					hrs = 12;
 				var fTime=hrs + ":" + mins + " " + timeType;
 				
-					
+				
 				selectedAppDetails=	
 				<div className="col-sm-9">
 				<h2>Details</h2>
@@ -104,6 +121,7 @@ class qEngine extends Component {
 							<QOpenAppButton _appid={qApp.qDocName}/>
 							</div>
 							
+							
 						 </div>
 				</div>
 					
@@ -121,18 +139,21 @@ class qEngine extends Component {
 			}
             )
 	
+		const dd= {position:'absolute', top: '0px', left: '0px', transform: 'translate3d(0px, 38px, 0px)'};
 		return ( 
 			
 				 <div className="container-fluid " >
+				 
 					  <div className="row content " >
 						<div className="col-sm-3 ">
-						  <h2>Apps</h2>
+						  <h2>Apps </h2>
+						  <UNewApp/>
 						  <ul className="list-group  vertical-scroll" >
 						  {qApps}
 						  </ul><br></br>
 						</div>
 						{selectedAppDetails}
-						</div>
+						</div>						
 				  </div>
 
 			

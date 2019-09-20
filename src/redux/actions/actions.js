@@ -1,4 +1,4 @@
-// src/redux/actions/actions.js
+	// src/redux/actions/actions.js
 /** */
 import axios from 'axios'
 //const url = "http://localhost:5000/api/"
@@ -26,6 +26,26 @@ export function openApp (_id) {
     }
 }
 
+export function createApp (_name,_desc) {
+	const name= encodeURIComponent(_name)
+	let reqUrl=""
+	if (_desc==""){
+		reqUrl=`${url}apps/create/${name}`
+	}
+	else{
+		const desc= encodeURIComponent(_desc)
+		reqUrl=`${url}apps/create/${name}/${desc}`
+	}
+	console.log(reqUrl)
+   return (dispatch) => {
+        axios.get(reqUrl)
+        .then((res) => {
+            let qNewAppDetails = res.data
+            dispatch({type: 'CREATE_APP', qNewAppDetails})
+        }).catch((err) => {console.log(err);dispatch({type: 'CREATE_APP',qNewAppDetails: {"qRequest":"createApp","qResponseStatus": "error" , "qResponseMsg":null}})})
+    }
+}
+
 
 export function getSheets () {
 	//const appid= encodeURIComponent(_app_id)
@@ -38,6 +58,30 @@ export function getSheets () {
         }).catch((err) => console.log(err))
     }
 }
+
+export function createSheet (_name,_desc) {
+	//const appid= encodeURIComponent(_app_id)
+	//console.log(`${url}app/${appid}/sheets`)
+	const name= encodeURIComponent(_name)
+	let reqUrl=""
+	if (_desc==""){
+		reqUrl=`${url}app/current/create/sheet/${name}`
+	}
+	else{
+		const desc= encodeURIComponent(_desc)
+		reqUrl=`${url}app/current/create/sheet/${name}/desc/${desc}`
+	}
+
+   return (dispatch) => {
+        axios.get(reqUrl)
+        .then((res) => {
+            let qSheetActionResponse = res.data
+            dispatch({type: 'CREATE_SHEET', qSheetActionResponse})
+        }).catch((err) => {console.log(err);dispatch({type: 'CREATE_SHEET',qSheetActionResponse: {"qRequest":"createSheet","qResponseStatus": "error" , "qResponseMsg":null}})})
+    }
+}
+
+
 
 export function getDimensions () {
 	//const appid= encodeURIComponent(_app_id)

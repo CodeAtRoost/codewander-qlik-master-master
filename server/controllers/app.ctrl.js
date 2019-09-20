@@ -456,4 +456,71 @@ currApp.getDimension(dimension_id).then(function(qObject){
 
  }
  
+,
+createSheet: (req,res,next)=>{
+	 
+ var sheetName = decodeURIComponent(req.params.name);
+ var sheetDesc = req.params.desc == null ? "": decodeURIComponent(req.params.desc);
+
+ var qParamsSheet={"qInfo":{"qType":"sheet"},
+	"qExtendsId":"",
+	"qStateName":"$",
+	"qMetaDef":{"title":sheetName,"description":sheetDesc},
+	"rank":0,
+	"thumbnail":{"qStaticContentUrlDef":null},
+	"columns":24,
+	"rows":12,
+	"cells":[],
+	"qChildListDef":{"qData":{"title":"/title"}}}
+	
+	
+	//console.log(JSON.stringify(qParamsSheet));
+	
+	
+
+if (req.params.app_id!=null)
+{
+	app_id=req.params.app_id
+	var config={
+	schema,
+	url: server_url  +app_id,
+	createSocket: url => new WebSocket(url)
+
+	};
+
+	if (qSession!=null)qSession.close();
+	qSession=enigma.create(config);
+	
+	qSession.open().then((global) => {
+	qGlobal=global;
+  
+	qGlobal.openDoc(app_id).then((app) => {
+	currApp=app;
+	currApp.createObject(qParamsSheet).then(function(qObject){
+		qObject.getLayout().then(function(qProp){
+			res.json({"qRequest":"createSheet","qResponseStatus": "success" , "qResponseMsg":qProp})
+		}, 
+		(e)=> {console.log(err);res.json({"qRequest":"createSheet", "qResponseStatus": "error", "qResponseMsg": null})});		
+		
+	}
+	,(err)=>{ console.log(err);res.json({"qRequest":"createSheet","qResponseStatus": "success" , "qResponseMsg":null})}) ;
+	})
+	},(err)=>{ console.log(err);res.json({"qRequest":"createSheet","qResponseStatus": "success" , "qResponseMsg":null})})
+	
+}
+else{
+currApp.createObject(qParamsSheet).then(function(qObject){
+		//console.log("created object");
+		qObject.getLayout().then(function(qProp){
+			res.json({"qResponseStatus": "success" , "qResponseMsg":qProp})
+		}, 
+		(e)=> {console.log(err);res.json({"qRequest":"createSheet","qResponseStatus": "success" , "qResponseMsg":null})});		
+		
+	}
+	,(err)=>{ console.log(err);res.json({"qRequest":"createSheet","qResponseStatus": "success" , "qResponseMsg":null})}) ;
+}
+
+ } 
+ 
+
 	}

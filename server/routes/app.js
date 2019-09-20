@@ -81,7 +81,7 @@ module.exports = (router) => {
         .get(appcontroller.getMasterVisualizations)
 		
 		
-/**
+	/**
      * return details of the object 
      */
     
@@ -126,5 +126,38 @@ module.exports = (router) => {
         .route('/app/:app_id/dimensiondetails/:dimension_id')
         .get(appcontroller.getDimensionDetails)		
 
-		
+	/**
+     * create sheet with name and desc in the current app
+     */
+    
+	router
+        .route('/app/current/create/sheet/:name/desc/:desc')
+        .get(appcontroller.createSheet)		
+
+	
+	/**
+     * open an app and create sheet with name and desc in the  app
+     */
+    
+	router
+        .route('/app/:app_id/create/sheet/:name/desc/:desc')
+        .get(appcontroller.createSheet)		
+
+	/**
+     * create sheet with name and no desc in the current app
+     */
+    
+	router
+        .route('/app/current/create/sheet/:name')
+        .get(appcontroller.createSheet)	
+	
+	/**
+     * open an app and create sheet with name and no desc in the  app
+     */
+    
+	router
+        .route('/app/:app_id/create/sheet/:name')
+        .get(appcontroller.createSheet)		
+	
+			
 }

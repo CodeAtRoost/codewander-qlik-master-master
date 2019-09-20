@@ -28,6 +28,20 @@ qixSession.open().then((global) => {
  },(err)=>{ console.log(err);res.json(err)});
 		
 		
+},
+createApp: (req, res, next) => {
+var appName = decodeURIComponent(req.params.name);
+ 
+var qParam = {"qAppName": appName}	   
+qixSession=enigma.create(qix_config);
+qixSession.open().then((global) => {
+  qixGlobal=global;
+  qixGlobal.createApp(qParam).then(function(qApp){res.json({"qRequest":"createApp","qResponseStatus": "success" , "qResponseMsg":qApp});
+ },(err)=>{ console.log(err);res.json({"qRequest":"createApp", "qResponseStatus": "error", "qResponseMsg": null})})});
+		
+		
 }
-        
+
+ 
+ 
 }

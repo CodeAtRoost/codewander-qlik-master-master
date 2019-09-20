@@ -7,5 +7,14 @@ module.exports = (router) => {
     router
         .route('/apps')
         .get(enginecontroller.getApps)
+		
+	/**
+     *  create new app
+     */
+    router
+        .route('/apps/create/:name')
+        .get(enginecontroller.createApp)	
+		
+	
    
 }

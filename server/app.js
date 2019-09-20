@@ -6,7 +6,8 @@ const routes = require('./routes/')
 const cors = require('cors')
 const enigma = require('enigma.js');
 const WebSocket = require('ws');
-const qixSchema = require('enigma.js/schemas/3.1.json');
+//const qixSchema = require('enigma.js/schemas/3.1.json');
+const qixSchema = require('enigma.js/schemas/12.170.2.json');
 
 
 

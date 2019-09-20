@@ -6,6 +6,7 @@ import QDimensions from './QDimensions'
 import QMeasures from './QMeasures'
 import QVariables from './QVariables'
 import QVisualizations from './QVisualizations'
+import UNewSheet from './modal/UNewSheet'
 
 
 
@@ -146,12 +147,19 @@ class qApp extends Component {
 				  </li>
 				  <li className="nav-item" onClick={(e) => self.getCurrentAppVariables()}>
 					<a className="nav-link" >Variables</a>
-				  </li>
+				  </li>		
+				  
 				  
 				</ul>
 				
 			  </div>
 		</nav>
+		<div className="row">
+		<div className="col-lg-12">
+		<UNewSheet/>
+		</div>
+		
+		</div>
 		<div className="row">
 		<div className="col-lg-12">
 		{QShowDetails}

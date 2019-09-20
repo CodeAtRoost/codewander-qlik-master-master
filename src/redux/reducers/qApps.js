@@ -8,7 +8,9 @@ const initialState = {
 	qMasterVisualizations: [],
 	qVariables:[],
 	qDisplayObject:{qObjectId: null},
-	qObjectDetails:[]
+	qObjectDetails:[],
+	qNewAppDetails:null,
+	qSheetActionResponse:null
 }
 export default (state=initialState, action) => {
     switch (action.type) {
@@ -22,11 +24,22 @@ export default (state=initialState, action) => {
             ...state,
             qApp: action.qApp
         }
+		 case 'CREATE_APP':
+        return {
+            ...state,
+            qNewAppDetails: action.qNewAppDetails
+        }
 		case 'GET_SHEETS':
 		return{
             ...state,
             qSheets: action.qSheets				
 		}
+		case 'CREATE_SHEET':
+		return{
+            ...state,
+            qSheetActionResponse: action.qSheetActionResponse				
+		}
+		
 		case 'GET_DIMENSIONS':
 		return{
             ...state,
