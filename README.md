@@ -8,3 +8,27 @@ http://www.codewander.com/enigma-js-app-instructions-to-download-and-install/
 Enigma JS Example Series
 http://www.codewander.com/qlik-sense-enigma-js-example-nodejs-expressjs-reactjs/
 
+ReactJS Client setup
+
+Basic setup
+
+Qlik sense enigma.js – example – Setup React JS Client – part 2
+
+Node JS/ Express JS server setup and routes
+
+Enigma.js – Collect details about existing components
+
+Create and open session, List Apps
+
+Qlik sense enigma js example – Get App Objects List
+
+Get Definitions of App Objects
+
+Enigma.js – Make changes to the existing components – coming soon
+
+Enigma.js – Create new components
+
+    Create App Part 1 – Server API , Part 2 – Client using React JS
+
+
+
